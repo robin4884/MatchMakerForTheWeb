@@ -11,7 +11,7 @@
 </p>Here you and your friend will fill out the fallowig questions will determin your friendship conpadability</p>
 </p>Friedn 1 fill out your name, answer the quetions on a scale from 1 -5 (Strongly Disagree - Strongly agree), then hit submit.Then friend 2 do the same. Once both have submitted your scres will be eveluated to see how compatiable you are. </p>
 </div>
-</div class="section">
+</div class="container">
 <form id="quizFormPerson1">
     <h2>Person 1</h2>
     <div class="question">
@@ -54,6 +54,60 @@
 </form>
 <div id="result"></div>
 </div>
-<script src="script.js"></script>
+<script>
+let person1 = {
+    answers: [],
+    compatibilityScore: 0
+};
+
+let person2 = {
+    answers: [],
+    compatibilityScore: 0
+};
+
+const quizFormPerson1 = document.getElementById('quizFormPerson1');
+const quizFormPerson2 = document.getElementById('quizFormPerson2');
+const resultDiv = document.getElementById('result');
+
+quizFormPerson1.addEventListener('submit', function(event) {
+    event.preventDefault();
+    person1.answers = Array.from(quizFormPerson1.elements)
+        .filter(element => element.tagName === 'SELECT')
+        .map(select => parseInt(select.value));
+    
+    const desiredAnswers = [1, 1, 1, 1, 1]; // Update with your desired answers
+    person1.compatibilityScore = calculateCompatibility(person1.answers, desiredAnswers);
+    displayComparisonResult(person1.compatibilityScore, person2.compatibilityScore, 'Person 1');
+});
+
+quizFormPerson2.addEventListener('submit', function(event) {
+    event.preventDefault();
+    person2.answers = Array.from(quizFormPerson2.elements)
+        .filter(element => element.tagName === 'SELECT')
+        .map(select => parseInt(select.value));
+    
+    const desiredAnswers = [1, 1, 1, 1, 1]; // Update with your desired answers
+    person2.compatibilityScore = calculateCompatibility(person2.answers, desiredAnswers);
+    displayComparisonResult(person1.compatibilityScore, person2.compatibilityScore, 'Person 2');
+});
+
+function calculateCompatibility(answers, desiredAnswers) {
+    const totalDifference = answers.reduce((acc, val, index) => acc + Math.abs(val - desiredAnswers[index]), 0);
+    return 100 - totalDifference;
+}
+
+function displayComparisonResult(score1, score2, person) {
+    let comparisonResult;
+    if (score1 > score2) {
+        comparisonResult = `${person} is a better match.`;
+    } else if (score1 < score2) {
+        comparisonResult = `${person} is a better match.`;
+    } else {
+        comparisonResult = `${person} and Person 2 are equally compatible.`;
+    }
+
+    resultDiv.textContent = comparisonResult;
+}
+    </script>
 </body>
 </html>
