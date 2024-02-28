@@ -55,15 +55,22 @@
 <div id="result"></div>
 </div>
 <script>
-let person1 = {
-    answers: [],
-    compatibilityScore: 0
-};
+function calculateCompatibility(answers1, answers2) {
+    if (answers1.length !== answers2.length) {
+        throw new Error('Answers arrays must have the same length.');
+    }
 
-let person2 = {
-    answers: [],
-    compatibilityScore: 0
-};
+    const totalQuestions = answers1.length;
+    let compatibilityScore = 0;
+
+    for (let i = 0; i < totalQuestions; i++) {
+        compatibilityScore += Math.abs(answers1[i] - answers2[i]);
+    }
+
+    const maxScore = totalQuestions * 4; // Assuming 1-5 scale for each question
+    const compatibilityPercentage = ((maxScore - compatibilityScore) / maxScore) * 100;
+    return compatibilityPercentage.toFixed(2); // Round to 2 decimal places
+}
 
 const quizFormPerson1 = document.getElementById('quizFormPerson1');
 const quizFormPerson2 = document.getElementById('quizFormPerson2');
@@ -71,43 +78,31 @@ const resultDiv = document.getElementById('result');
 
 quizFormPerson1.addEventListener('submit', function(event) {
     event.preventDefault();
-    person1.answers = Array.from(quizFormPerson1.elements)
+    const answersPerson1 = Array.from(quizFormPerson1.elements)
         .filter(element => element.tagName === 'SELECT')
         .map(select => parseInt(select.value));
-    
-    const desiredAnswers = [1, 1, 1, 1, 1]; // Update with your desired answers
-    person1.compatibilityScore = calculateCompatibility(person1.answers, desiredAnswers);
-    displayComparisonResult(person1.compatibilityScore, person2.compatibilityScore, 'Person 1');
+
+    const answersPerson2 = Array.from(quizFormPerson2.elements)
+        .filter(element => element.tagName === 'SELECT')
+        .map(select => parseInt(select.value));
+
+    const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
+    resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
 });
 
 quizFormPerson2.addEventListener('submit', function(event) {
     event.preventDefault();
-    person2.answers = Array.from(quizFormPerson2.elements)
+    const answersPerson1 = Array.from(quizFormPerson1.elements)
         .filter(element => element.tagName === 'SELECT')
         .map(select => parseInt(select.value));
-    
-    const desiredAnswers = [1, 1, 1, 1, 1]; // Update with your desired answers
-    person2.compatibilityScore = calculateCompatibility(person2.answers, desiredAnswers);
-    displayComparisonResult(person1.compatibilityScore, person2.compatibilityScore, 'Person 2');
+
+    const answersPerson2 = Array.from(quizFormPerson2.elements)
+        .filter(element => element.tagName === 'SELECT')
+        .map(select => parseInt(select.value));
+
+    const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
+    resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
 });
-
-function calculateCompatibility(answers, desiredAnswers) {
-    const totalDifference = answers.reduce((acc, val, index) => acc + Math.abs(val - desiredAnswers[index]), 0);
-    return 100 - totalDifference;
-}
-
-function displayComparisonResult(score1, score2, person) {
-    let comparisonResult;
-    if (score1 > score2) {
-        comparisonResult = `${person} is a better match.`;
-    } else if (score1 < score2) {
-        comparisonResult = `${person} is a better match.`;
-    } else {
-        comparisonResult = `${person} and Person 2 are equally compatible.`;
-    }
-
-    resultDiv.textContent = comparisonResult;
-}
     </script>
 </body>
 </html>
