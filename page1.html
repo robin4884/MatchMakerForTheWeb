@@ -9,110 +9,41 @@
 </div>
 <div class="p">
 </p>Here you and your friend will fill out the fallowig questions will determin your friendship conpadability</p>
-</p>Friedn 1 fill out your name, answer the quetions on a scale from 1 -5 (Strongly Disagree - Strongly agree), then hit submit.Then friend 2 do the same. Once both have submitted your scres will be eveluated to see how compatiable you are. </p>
+<p>Answer the following questions to see how compatible you are with your friend!</p>
+    <form id="quizFormPerson1">
+        <h2>Person 1</h2>
+        <div class="question">
+            <label for="q1">Question 1: Broccoli is delicious.</label>
+            <select name="q1" id="q1">
+                <option value="1">Strongly Disagree</option>
+                <option value="2">Disagree</option>
+                <option value="3">Neutral</option>
+                <option value="4">Agree</option>
+                <option value="5">Strongly Agree</option>
+            </select>
+            <span class="compatibility-score" id="compatibilityScore1"></span>
+        </div>
+        <!-- Repeat the above for each question -->
+        <input type="submit" value="Submit">
+    </form>
+    <form id="quizFormPerson2">
+        <h2>Person 2</h2>
+        <div class="question">
+            <label for="q1">Question 1: Broccoli is delicious.</label>
+            <select name="q1" id="q1">
+                <option value="1">Strongly Disagree</option>
+                <option value="2">Disagree</option>
+                <option value="3">Neutral</option>
+                <option value="4">Agree</option>
+                <option value="5">Strongly Agree</option>
+            </select>
+            <span class="compatibility-score" id="compatibilityScore2"></span>
+        </div>
+        <!-- Repeat the above for each question -->
+        <input type="submit" value="Submit">
+    </form>
+    <div id="result"></div>
 </div>
-</div class="container">
-<form id="quizFormPerson1">
-    <h2>Person 1</h2>
-    <div class="question">
-        <label for="q1">Question 1: Broccoli is delicious.</label>
-        <select id="q1">
-            <option value="1">Strongly Disagree</option>
-            <option value="2">Disagree</option>
-            <option value="3">Neutral</option>
-            <option value="4">Agree</option>
-            <option value="5">Strongly Agree</option>
-        </select>
-    </div>
-    <div class="question">
-        <label for="q1">Question 1: Boba is good.</label>
-        <select id="q1">
-            <option value="1">Strongly Disagree</option>
-            <option value="2">Disagree</option>
-            <option value="3">Neutral</option>
-            <option value="4">Agree</option>
-            <option value="5">Strongly Agree</option>
-        </select>
-    </div>
-    <!-- Repeat the above for each question -->
-    <input type="submit" value="Submit">
-</form>
-<form id="quizFormPerson2">
-    <h2>Person 2</h2>
-    <div class="question">
-        <label for="q1">Question 1: Broccoli is delicious.</label>
-        <select id="q1">
-            <option value="1">Strongly Disagree</option>
-            <option value="2">Disagree</option>
-            <option value="3">Neutral</option>
-            <option value="4">Agree</option>
-            <option value="5">Strongly Agree</option>
-        </select>
-    </div>
-    <div class="question">
-        <label for="q1">Question 1: Boba is good.</label>
-        <select id="q1">
-            <option value="1">Strongly Disagree</option>
-            <option value="2">Disagree</option>
-            <option value="3">Neutral</option>
-            <option value="4">Agree</option>
-            <option value="5">Strongly Agree</option>
-        </select>
-    </div>
-    <!-- Repeat the above for each question -->
-    <input type="submit" value="Submit">
-</form>
-<div id="result"></div>
-</div>
-<script>
-function calculateCompatibility(answers1, answers2) {
-    if (answers1.length !== answers2.length) {
-        throw new Error('Answers arrays must have the same length.');
-    }
-
-    const totalQuestions = answers1.length;
-    let compatibilityScore = 0;
-
-    for (let i = 0; i < totalQuestions; i++) {
-        compatibilityScore += Math.abs(answers1[i] - answers2[i]);
-    }
-
-    const maxScore = totalQuestions * 4; // Assuming 1-5 scale for each question
-    const compatibilityPercentage = ((maxScore - compatibilityScore) / maxScore) * 100;
-    return compatibilityPercentage.toFixed(2); // Round to 2 decimal places
-}
-
-const quizFormPerson1 = document.getElementById('quizFormPerson1');
-const quizFormPerson2 = document.getElementById('quizFormPerson2');
-const resultDiv = document.getElementById('result');
-
-quizFormPerson1.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const answersPerson1 = Array.from(quizFormPerson1.elements)
-        .filter(element => element.tagName === 'SELECT')
-        .map(select => parseInt(select.value));
-
-    const answersPerson2 = Array.from(quizFormPerson2.elements)
-        .filter(element => element.tagName === 'SELECT')
-        .map(select => parseInt(select.value));
-
-    const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
-    resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
-});
-
-quizFormPerson2.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const answersPerson1 = Array.from(quizFormPerson1.elements)
-        .filter(element => element.tagName === 'SELECT')
-        .map(select => parseInt(select.value));
-
-    const answersPerson2 = Array.from(quizFormPerson2.elements)
-        .filter(element => element.tagName === 'SELECT')
-        .map(select => parseInt(select.value));
-
-    const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
-    resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
-});
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
