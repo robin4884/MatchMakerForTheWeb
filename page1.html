@@ -3,30 +3,57 @@
     <meta charset="UTF-8">
 <head>
     <title>Page 1 friends</title>
-       <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('HeartBackGroundPage1.jpg');
-        }
-        .header {
-            background-color: #ff0000;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 35px;
-        }
-        .section {
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin: 10px;
-        }
-        .h2 {
-            background-color: #ff0000;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 15px;
-        }
-     </style>
+    <link rel="page1" href="Page1.css">
+      <div class="header">
+    </h1>Frends!</h1>
+</div>
+<div class="p">
+</p>Here you and your friend will fill out the fallowig questions will determin your friendship conpadability</p>
+</p>Friedn 1 fill out your name, answer the quetions on a scale from 1 -5 (Strongly Disagree - Strongly agree), then hit submit.Then friend 2 do the same. Once both have submitted your scres will be eveluated to see how compatiable you are. </p>
+</div>
+</div class="section">
+<form id="quizFormPerson1">
+    <h2>Person 1</h2>
+    <div class="question">
+        <label for="q1">Question 1: Broccoli is delicious.</label>
+        <select id="q1">
+            <option value="1">Strongly Disagree</option>
+            <option value="2">Disagree</option>
+            <option value="3">Neutral</option>
+            <option value="4">Agree</option>
+            <option value="5">Strongly Agree</option>
+        </select>
+    </div>
+    <!-- Repeat the above for each question -->
+    <input type="submit" value="Submit">
+</form>
+<form id="quizFormPerson2">
+    <h2>Person 2</h2>
+    <div class="question">
+        <label for="q1">Question 1: Broccoli is delicious.</label>
+        <select id="q1">
+            <option value="1">Strongly Disagree</option>
+            <option value="2">Disagree</option>
+            <option value="3">Neutral</option>
+            <option value="4">Agree</option>
+            <option value="5">Strongly Agree</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q1">Question 1: Boba is good.</label>
+        <select id="q1">
+            <option value="1">Strongly Disagree</option>
+            <option value="2">Disagree</option>
+            <option value="3">Neutral</option>
+            <option value="4">Agree</option>
+            <option value="5">Strongly Agree</option>
+        </select>
+    </div>
+    <!-- Repeat the above for each question -->
+    <input type="submit" value="Submit">
+</form>
+<div id="result"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
