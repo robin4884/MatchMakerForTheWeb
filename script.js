@@ -15,6 +15,16 @@ function calculateCompatibility(answers1, answers2) {
     return compatibilityPercentage.toFixed(2); // Round to 2 decimal places
 }
 
+function showPopup(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup';
+    popup.textContent = message;
+    document.body.appendChild(popup);
+    setTimeout(() => {
+        popup.remove();
+    }, 2000); // Remove the popup after 2 seconds
+}
+
 const quizFormPerson1 = document.getElementById('quizFormPerson1');
 const quizFormPerson2 = document.getElementById('quizFormPerson2');
 const resultDiv = document.getElementById('result');
@@ -29,16 +39,26 @@ quizFormPerson1.addEventListener('submit', function(event) {
         .filter(element => element.tagName === 'SELECT')
         .map(select => parseInt(select.value));
 
-    const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
-    resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
-
-    // Display compatibility scores for each question
-    const compatibilityScores = [];
-    for (let i = 0; i < answersPerson1.length; i++) {
-        const questionScore = Math.abs(answersPerson1[i] - answersPerson2[i]);
-        compatibilityScores.push(`Question ${i + 1}: ${questionScore}`);
+    if (answersPerson1.length !== answersPerson2.length) {
+        showPopup('Answers arrays must have the same length.');
+        return;
     }
-    document.getElementById('compatibilityScore1').textContent = compatibilityScores.join(', ');
+
+    try {
+        const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
+        resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
+        showPopup(`Compatibility: ${compatibilityPercentage}%`);
+
+        // Display compatibility scores for each question
+        const compatibilityScores = [];
+        for (let i = 0; i < answersPerson1.length; i++) {
+            const questionScore = Math.abs(answersPerson1[i] - answersPerson2[i]);
+            compatibilityScores.push(`Question ${i + 1}: ${questionScore}`);
+        }
+        document.getElementById('compatibilityScore1').textContent = compatibilityScores.join(', ');
+    } catch (error) {
+        showPopup(error.message);
+    }
 });
 
 quizFormPerson2.addEventListener('submit', function(event) {
@@ -51,14 +71,24 @@ quizFormPerson2.addEventListener('submit', function(event) {
         .filter(element => element.tagName === 'SELECT')
         .map(select => parseInt(select.value));
 
-    const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
-    resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
-
-    // Display compatibility scores for each question
-    const compatibilityScores = [];
-    for (let i = 0; i < answersPerson1.length; i++) {
-        const questionScore = Math.abs(answersPerson1[i] - answersPerson2[i]);
-        compatibilityScores.push(`Question ${i + 1}: ${questionScore}`);
+    if (answersPerson1.length !== answersPerson2.length) {
+        showPopup('Answers arrays must have the same length.');
+        return;
     }
-    document.getElementById('compatibilityScore2').textContent = compatibilityScores.join(', ');
+
+    try {
+        const compatibilityPercentage = calculateCompatibility(answersPerson1, answersPerson2);
+        resultDiv.textContent = `Compatibility: ${compatibilityPercentage}%`;
+        showPopup(`Compatibility: ${compatibilityPercentage}%`);
+
+        // Display compatibility scores for each question
+        const compatibilityScores = [];
+        for (let i = 0; i < answersPerson1.length; i++) {
+            const questionScore = Math.abs(answersPerson1[i] - answersPerson2[i]);
+            compatibilityScores.push(`Question ${i + 1}: ${questionScore}`);
+        }
+        document.getElementById('compatibilityScore2').textContent = compatibilityScores.join(', ');
+    } catch (error) {
+        showPopup(error.message);
+    }
 });
