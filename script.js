@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayCompatibilitySummary() {
         const compatibilityScores = [];
         const questionSelects = document.querySelectorAll(".questionSelect");
+        questionSummary.innerHTML = ""; // Clear previous summary
         questionSelects.forEach((select, index) => {
             const score = parseInt(select.value);
             compatibilityScores.push(score);
