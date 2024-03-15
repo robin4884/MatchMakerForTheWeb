@@ -25,6 +25,11 @@
     h1, h2, p {
         text-align: center;
     }
+    h3 {
+        text-align: left;
+        padding: 20px;
+
+    }
 
     button {
         display: block;
@@ -58,7 +63,7 @@
 <div class="container">
     <h1>Friendship Compatibility Quiz</h1>
     <p>Person 1 and 2 put your answear in the box form 1 - 5. 1 will be strongly disagree with the statement and 5 being strongly agree with the statement.</p>
-    <div id="questions"></div>
+    <h3 id="questions"></h3>
     <button onclick="calculateCompatibility()">Calculate Compatibility</button>
     <div id="results"></div>
     <div class="error" id="error"></div>
