@@ -9,6 +9,7 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-image: url('HeartBackGroundPage1.jpg');
     }
 
     .container {
@@ -55,6 +56,7 @@
 <body>
 <div class="container">
     <h1>Friendship Compatibility Quiz</h1>
+    <p>Person 1 and 2 put your answear in the box form 1 - 5. 1 will be strongly disagree and 5 being strongly agree</p>
     <div id="questions"></div>
     <button onclick="calculateCompatibility()">Calculate Compatibility</button>
     <div id="results"></div>
@@ -62,11 +64,11 @@
 </div>
 <script>
     const questions = [
-        "I enjoy spending time with this person.",
-        "I trust this person.",
-        "I feel comfortable sharing personal information with this person.",
-        "I feel understood by this person.",
-        "I feel supported by this person."
+        "Working out is fun",
+        "The best video game series is Assasins Creed",
+        "Sweets are the best foods",
+        "Arts and Crafts are fun",
+        "Good Grades are impartant to a thryving feuter"
     ];
 
     let answersPerson1 = [];
