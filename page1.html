@@ -69,8 +69,8 @@
         "I feel supported by this person."
     ];
 
-    let answersFriend1 = [];
-    let answersFriend2 = [];
+    let answersPerson1 = [];
+    let answersPerson2 = [];
 
     function renderQuestions() {
         const questionsDiv = document.getElementById('questions');
@@ -78,27 +78,27 @@
         questions.forEach((question, index) => {
             questionsDiv.innerHTML += `
                 <p>${question}</p>
-                <input type="number" min="1" max="5" id="friend1-answer${index + 1}" required>
-                <input type="number" min="1" max="5" id="friend2-answer${index + 1}" required>
+                <input type="number" min="1" max="5" id="person1-answer${index + 1}" required placeholder="Person 1">
+                <input type="number" min="1" max="5" id="person2-answer${index + 1}" required placeholder="Person 2">
             `;
         });
     }
 
     function calculateCompatibility() {
-        answersFriend1 = [];
-        answersFriend2 = [];
+        answersPerson1 = [];
+        answersPerson2 = [];
         const errorDiv = document.getElementById('error');
         errorDiv.innerHTML = '';
 
         for (let i = 0; i < questions.length; i++) {
-            const answerFriend1 = document.getElementById(`friend1-answer${i + 1}`).value;
-            const answerFriend2 = document.getElementById(`friend2-answer${i + 1}`).value;
-            if (!answerFriend1 || !answerFriend2) {
-                errorDiv.textContent = "Please answer all questions for both friends.";
+            const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
+            const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
+            if (!answerPerson1 || !answerPerson2) {
+                errorDiv.textContent = "Please answer all questions for both persons.";
                 return;
             }
-            answersFriend1.push(parseInt(answerFriend1));
-            answersFriend2.push(parseInt(answerFriend2));
+            answersPerson1.push(parseInt(answerPerson1));
+            answersPerson2.push(parseInt(answerPerson2));
         }
 
         const compatibilityScore = calculateCompatibilityScore();
@@ -114,7 +114,7 @@
         let total = 0;
 
         for (let i = 0; i < questions.length; i++) {
-            total += Math.abs(answersFriend1[i] - answersFriend2[i]);
+            total += Math.abs(answersPerson1[i] - answersPerson2[i]);
         }
 
         const average = (1 - total / (questions.length * 4)) * 100;
