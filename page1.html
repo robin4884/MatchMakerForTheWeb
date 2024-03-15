@@ -1,51 +1,50 @@
 <!DOCTYPE html>
 <html>
-    <meta charset="UTF-8">
 <head>
+    <meta charset="UTF-8">
     <title>Page 1 friends</title>
-    <link rel="page1" href="page1.html">
 </head>
 <body>
-      <div class="header">
-    </h1>Frends!</h1>
-</div>
-<div class="p">
-</p>Here you and your friend will fill out the fallowig questions will determin your friendship conpadability</p>
-<p>Answer the following questions to see how compatible you are with your friend!</p>
-    <form id="quizFormPerson1">
-        <h2>Person 1</h2>
-        <div class="question">
-            <label for="q1">Question 1: Broccoli is delicious.</label>
-            <select name="q1" id="q1">
-                <option value="1">Strongly Disagree</option>
-                <option value="2">Disagree</option>
-                <option value="3">Neutral</option>
-                <option value="4">Agree</option>
-                <option value="5">Strongly Agree</option>
-            </select>
-            <span class="compatibility-score" id="compatibilityScore1"></span>
-        </div>
-        <!-- Repeat the above for each question -->
-        <input type="submit" value="Submit">
-    </form>
-    <form id="quizFormPerson2">
-        <h2>Person 2</h2>
-        <div class="question">
-            <label for="q1">Question 1: Broccoli is delicious.</label>
-            <select name="q1" id="q1">
-                <option value="1">Strongly Disagree</option>
-                <option value="2">Disagree</option>
-                <option value="3">Neutral</option>
-                <option value="4">Agree</option>
-                <option value="5">Strongly Agree</option>
-            </select>
-            <span class="compatibility-score" id="compatibilityScore2"></span>
-        </div>
-        <!-- Repeat the above for each question -->
-        <input type="submit" value="Submit">
-    </form>
-    <div id="result"></div>
-</div>
-<script src="script.js"></script>
+    <div class="header">
+        <h1>Friends!</h1>
+    </div>
+    <div class="p">
+        <p>Here you and your friend will fill out the following questions to determine your friendship compatibility.</p>
+        <p>Answer the following questions to see how compatible you are with your friend!</p>
+        <form id="quizFormPerson1">
+            <h2>Person 1</h2>
+            <div class="question">
+                <label for="q1">Question 1: Broccoli is delicious.</label>
+                <select name="q1" id="q1">
+                    <option value="1">Strongly Disagree</option>
+                    <option value="2">Disagree</option>
+                    <option value="3">Neutral</option>
+                    <option value="4">Agree</option>
+                    <option value="5">Strongly Agree</option>
+                </select>
+                <span class="compatibility-score" id="compatibilityScore1"></span>
+            </div>
+            <!-- Repeat the above for each question -->
+            <input type="submit" value="Submit">
+        </form>
+        <form id="quizFormPerson2">
+            <h2>Person 2</h2>
+            <div class="question">
+                <label for="q2">Question 1: Broccoli is delicious.</label>
+                <select name="q2" id="q2">
+                    <option value="1">Strongly Disagree</option>
+                    <option value="2">Disagree</option>
+                    <option value="3">Neutral</option>
+                    <option value="4">Agree</option>
+                    <option value="5">Strongly Agree</option>
+                </select>
+                <span class="compatibility-score" id="compatibilityScore2"></span>
+            </div>
+            <!-- Repeat the above for each question -->
+            <input type="submit" value="Submit">
+        </form>
+        <div id="result"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
