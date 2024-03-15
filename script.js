@@ -1,30 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const quizFormPerson1 = document.getElementById("quizFormPerson1");
-    const quizFormPerson2 = document.getElementById("quizFormPerson2");
+    const quizForm = document.getElementById("quizForm");
     const questionSummary = document.getElementById("questionSummary");
     const overallSummary = document.getElementById("overallSummary");
     const closingRemark = document.getElementById("closingRemark");
 
-    quizFormPerson1.addEventListener("submit", function(event) {
+    quizForm.addEventListener("submit", function(event) {
         event.preventDefault();
-        displayCompatibilitySummary("1");
+        displayCompatibilitySummary();
     });
 
-    quizFormPerson2.addEventListener("submit", function(event) {
-        event.preventDefault();
-        displayCompatibilitySummary("2");
-    });
-
-    function displayCompatibilitySummary(personNumber) {
+    function displayCompatibilitySummary() {
         const compatibilityScores = [];
-        const questions = document.querySelectorAll(`#quizFormPerson${personNumber} .question select`);
-        questions.forEach((select, index) => {
+        const questionSelects = document.querySelectorAll(".questionSelect");
+        questionSelects.forEach((select, index) => {
             const score = parseInt(select.value);
             compatibilityScores.push(score);
             const questionNumber = index + 1;
-            const span = document.getElementById(`compatibilityScore${personNumber}`);
-            span.textContent = `Compatibility Score: ${score}`;
-            questionSummary.innerHTML += `<p>Person ${personNumber}, Question ${questionNumber}: ${score}</p>`;
+            questionSummary.innerHTML += `<p>Question ${questionNumber}: ${score}</p>`;
         });
 
         const overallScore = compatibilityScores.reduce((acc, val) => acc + val, 0) / (compatibilityScores.length * 5) * 100;
