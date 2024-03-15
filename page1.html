@@ -69,8 +69,8 @@
         "I feel supported by this person."
     ];
 
-    let answers = [];
-    let totalCompatibility = 0;
+    let answersFriend1 = [];
+    let answersFriend2 = [];
 
     function renderQuestions() {
         const questionsDiv = document.getElementById('questions');
@@ -78,47 +78,65 @@
         questions.forEach((question, index) => {
             questionsDiv.innerHTML += `
                 <p>${question}</p>
-                <input type="number" min="1" max="5" id="answer${index + 1}" required>
+                <input type="number" min="1" max="5" id="friend1-answer${index + 1}" required>
+                <input type="number" min="1" max="5" id="friend2-answer${index + 1}" required>
             `;
         });
     }
 
     function calculateCompatibility() {
-        answers = [];
-        totalCompatibility = 0;
+        answersFriend1 = [];
+        answersFriend2 = [];
         const errorDiv = document.getElementById('error');
         errorDiv.innerHTML = '';
 
         for (let i = 0; i < questions.length; i++) {
-            const answer = document.getElementById(`answer${i + 1}`).value;
-            if (!answer) {
-                errorDiv.textContent = "Please answer all questions.";
+            const answerFriend1 = document.getElementById(`friend1-answer${i + 1}`).value;
+            const answerFriend2 = document.getElementById(`friend2-answer${i + 1}`).value;
+            if (!answerFriend1 || !answerFriend2) {
+                errorDiv.textContent = "Please answer all questions for both friends.";
                 return;
             }
-            answers.push(parseInt(answer));
-            totalCompatibility += 5 - Math.abs(answers[i] - 3);
+            answersFriend1.push(parseInt(answerFriend1));
+            answersFriend2.push(parseInt(answerFriend2));
         }
 
-        const averageCompatibility = (totalCompatibility / questions.length) * 20;
+        const compatibilityScores = calculateCompatibilityScores();
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = `
             <h2>Results</h2>
-            <p>Overall Compatibility: ${averageCompatibility.toFixed(2)}%</p>
-            <p>Individual Question Scores:</p>
-            <ul>
-                ${answers.map((answer, index) => `<li>${questions[index]}: ${100 - Math.abs(answer - 3) * 20}%</li>`).join('')}
-            </ul>
-            <p>${getClosingRemark(averageCompatibility)}</p>
+            <p>Friend 1's Compatibility Score: ${compatibilityScores.friend1.toFixed(2)}%</p>
+            <p>Friend 2's Compatibility Score: ${compatibilityScores.friend2.toFixed(2)}%</p>
+            <p>${getClosingRemark(compatibilityScores)}</p>
         `;
     }
 
-    function getClosingRemark(averageCompatibility) {
-        if (averageCompatibility >= 80) {
-            return "You are incredibly compatible!";
-        } else if (averageCompatibility >= 60) {
+    function calculateCompatibilityScores() {
+        let totalFriend1 = 0;
+        let totalFriend2 = 0;
+
+        for (let i = 0; i < questions.length; i++) {
+            totalFriend1 += 5 - Math.abs(answersFriend1[i] - 3);
+            totalFriend2 += 5 - Math.abs(answersFriend2[i] - 3);
+        }
+
+        const averageFriend1 = (totalFriend1 / questions.length) * 20;
+        const averageFriend2 = (totalFriend2 / questions.length) * 20;
+
+        return {
+            friend1: averageFriend1,
+            friend2: averageFriend2
+        };
+    }
+
+    function getClosingRemark(compatibilityScores) {
+        const difference = Math.abs(compatibilityScores.friend1 - compatibilityScores.friend2);
+        if (difference >= 30) {
+            return "You might not be the best match.";
+        } else if (difference >= 10) {
             return "You are moderately compatible.";
         } else {
-            return "You might not be the best match.";
+            return "You are incredibly compatible!";
         }
     }
 
