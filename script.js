@@ -10,22 +10,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function displayCompatibilitySummary() {
-        const compatibilityScores = [];
         const questionSelects = Array.from(document.querySelectorAll(".questionSelect"));
-        questionSummary.textContent = ""; // Clear previous summary
-        questionSelects.forEach((select, index) => {
-            const score = parseInt(select.value);
-            compatibilityScores.push(score);
-            const questionNumber = index + 1;
-            questionSummary.textContent += `Question ${questionNumber}: ${score}\n`;
-        });
+        const totalQuestions = questionSelects.length / 2; // Assuming both friends have answered the same number of questions
 
-        const maxScore = 5; // Maximum possible score for a question
-        const totalQuestions = compatibilityScores.length;
-        const sameAnswersPenalty = totalQuestions * maxScore; // Maximum penalty for all same answers
-        const scoreSum = compatibilityScores.reduce((acc, score) => acc + score, 0);
-        const avgScore = scoreSum / totalQuestions;
-        const compatibilityScore = ((maxScore * totalQuestions - scoreSum) / (maxScore * totalQuestions - sameAnswersPenalty)) * 100;
+        const scores1 = questionSelects.slice(0, totalQuestions).map(select => parseInt(select.value));
+        const scores2 = questionSelects.slice(totalQuestions).map(select => parseInt(select.value));
+
+        const correctAnswers = scores1.reduce((acc, score, index) => (score === scores2[index] ? acc + 1 : acc), 0);
+        const compatibilityScore = (correctAnswers / totalQuestions) * 100;
+
         overallSummary.textContent = `Overall Compatibility Score: ${compatibilityScore.toFixed(2)}%`;
 
         let message = "";
