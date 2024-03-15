@@ -78,8 +78,10 @@
         questions.forEach((question, index) => {
             questionsDiv.innerHTML += `
                 <p>${question}</p>
-                <input type="number" min="1" max="5" id="person1-answer${index + 1}" required placeholder="Person 1">
-                <input type="number" min="1" max="5" id="person2-answer${index + 1}" required placeholder="Person 2">
+                <label for="person1-answer${index + 1}">Person 1:</label>
+                <input type="number" min="1" max="5" id="person1-answer${index + 1}" required>
+                <label for="person2-answer${index + 1}">Person 2:</label>
+                <input type="number" min="1" max="5" id="person2-answer${index + 1}" required>
             `;
         });
     }
