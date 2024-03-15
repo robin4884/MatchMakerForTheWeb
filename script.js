@@ -20,18 +20,20 @@ document.addEventListener("DOMContentLoaded", function() {
             questionSummary.textContent += `Question ${questionNumber}: ${score}\n`;
         });
 
-        const maxDiff = 4; // Maximum difference between two scores
+        const maxScore = 5; // Maximum possible score for a question
+        const totalQuestions = compatibilityScores.length;
+        const sameAnswersPenalty = totalQuestions * maxScore; // Maximum penalty for all same answers
         const scoreSum = compatibilityScores.reduce((acc, score) => acc + score, 0);
-        const avgScore = scoreSum / compatibilityScores.length;
-        const overallScore = ((maxDiff - avgScore) / maxDiff) * 100;
-        overallSummary.textContent = `Overall Compatibility Score: ${overallScore.toFixed(2)}%`;
+        const avgScore = scoreSum / totalQuestions;
+        const compatibilityScore = ((maxScore * totalQuestions - scoreSum) / (maxScore * totalQuestions - sameAnswersPenalty)) * 100;
+        overallSummary.textContent = `Overall Compatibility Score: ${compatibilityScore.toFixed(2)}%`;
 
         let message = "";
-        if (overallScore >= 80) {
+        if (compatibilityScore >= 80) {
             message = "You are super compatible!";
-        } else if (overallScore >= 60) {
+        } else if (compatibilityScore >= 60) {
             message = "You are quite compatible!";
-        } else if (overallScore >= 40) {
+        } else if (compatibilityScore >= 40) {
             message = "You are moderately compatible.";
         } else {
             message = "You might not be very compatible.";
