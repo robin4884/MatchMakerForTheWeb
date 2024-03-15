@@ -30,14 +30,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const overallScore = compatibilityScores.reduce((acc, val) => acc + val, 0) / (compatibilityScores.length * 5) * 100;
         overallSummary.textContent = `Overall Compatibility Score: ${overallScore.toFixed(2)}%`;
 
+        let message = "";
         if (overallScore >= 80) {
-            closingRemark.textContent = "You are super compatible!";
+            message = "You are super compatible!";
         } else if (overallScore >= 60) {
-            closingRemark.textContent = "You are quite compatible!";
+            message = "You are quite compatible!";
         } else if (overallScore >= 40) {
-            closingRemark.textContent = "You are moderately compatible.";
+            message = "You are moderately compatible.";
         } else {
-            closingRemark.textContent = "You might not be very compatible.";
+            message = "You might not be very compatible.";
         }
+
+        closingRemark.textContent = message;
+        alert(message + " Congratulations, this is your compatibility!");
     }
 });
