@@ -20,11 +20,11 @@ document.addEventListener("DOMContentLoaded", function() {
             questionSummary.textContent += `Question ${questionNumber}: ${score}\n`;
         });
 
-        const lowestScore = 1; // Lowest possible score
-        const highestScore = 5; // Highest possible score
-        const minMaxDiff = highestScore - lowestScore;
-        const overallScore = (1 - (compatibilityScores.reduce((acc, val) => acc + Math.abs(val - (highestScore + lowestScore) / 2), 0) / (compatibilityScores.length * minMaxDiff))) * 100;
-        overallSummary.textContent = `Overall Compatibility Score: ${overallScore.toFixed(2)}%`;
+        const minScore = Math.min(...compatibilityScores);
+        const maxScore = Math.max(...compatibilityScores);
+        const compatibilityDiff = maxScore - minScore;
+        const overallScore = ((compatibilityDiff / 4) * 25).toFixed(2);
+        overallSummary.textContent = `Overall Compatibility Score: ${overallScore}%`;
 
         let message = "";
         if (overallScore >= 80) {
