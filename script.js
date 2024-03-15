@@ -11,31 +11,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function displayCompatibilitySummary() {
         const compatibilityScores = [];
-        const questionSelects = document.querySelectorAll(".questionSelect");
-        let hasError = false;
-
-        questionSummary.innerHTML = ""; // Clear previous summary
-
+        const questionSelects = Array.from(document.querySelectorAll(".questionSelect"));
+        questionSummary.textContent = ""; // Clear previous summary
         questionSelects.forEach((select, index) => {
             const score = parseInt(select.value);
-            if (isNaN(score)) {
-                hasError = true;
-                select.classList.add("error");
-            } else {
-                select.classList.remove("error");
-                compatibilityScores.push(score);
-                const questionNumber = index + 1;
-                questionSummary.innerHTML += `<p>Question ${questionNumber}: ${score}</p>`;
-            }
+            compatibilityScores.push(score);
+            const questionNumber = index + 1;
+            questionSummary.textContent += `Question ${questionNumber}: ${score}\n`;
         });
 
-        if (hasError) {
-            overallSummary.textContent = "";
-            closingRemark.textContent = "";
-            return;
-        }
-
-        const overallScore = compatibilityScores.reduce((acc, val) => acc + val, 0) / (compatibilityScores.length * 5) * 100;
+        const lowestScore = 1; // Lowest possible score
+        const overallScore = (compatibilityScores.reduce((acc, val) => acc + (val === lowestScore ? 0 : val), 0) / (compatibilityScores.length * 5)) * 100;
         overallSummary.textContent = `Overall Compatibility Score: ${overallScore.toFixed(2)}%`;
 
         let message = "";

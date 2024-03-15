@@ -3,55 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Friendship Compatibility Quiz</title>
-    <style>
-        .error {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Friendship Compatibility Quiz</h1>
-    </div>
-    <div class="p">
-        <p>Answer the following questions to see how compatible you are with your friend!</p>
-        <form id="quizForm">
-            <h2>Friend 1</h2>
-            <div class="question">
-                <label for="q1">Question 1: Broccoli is delicious.</label>
-                <select name="q1" class="questionSelect">
-                    <option value="">Select an option</option>
-                    <option value="1">Strongly Disagree</option>
-                    <option value="2">Disagree</option>
-                    <option value="3">Neutral</option>
-                    <option value="4">Agree</option>
-                    <option value="5">Strongly Agree</option>
-                </select>
+    <div class="container">
+        <div class="header">
+            <h1>Friendship Compatibility Quiz</h1>
+        </div>
+        <div class="quiz">
+            <p>Answer the following questions to see how compatible you are with your friend!</p>
+            <form id="quizForm">
+                <h2>Friend 1</h2>
+                <div class="question">
+                    <label for="q1">Question 1: Broccoli is delicious.</label>
+                    <select name="q1" class="questionSelect">
+                        <option value="">Select an option</option>
+                        <option value="1">Strongly Disagree</option>
+                        <option value="2">Disagree</option>
+                        <option value="3">Neutral</option>
+                        <option value="4">Agree</option>
+                        <option value="5">Strongly Agree</option>
+                    </select>
+                </div>
+                <!-- Add more questions here -->
+                <h2>Friend 2</h2>
+                <div class="question">
+                    <label for="q2">Question 1: Broccoli is delicious.</label>
+                    <select name="q2" class="questionSelect">
+                        <option value="">Select an option</option>
+                        <option value="1">Strongly Disagree</option>
+                        <option value="2">Disagree</option>
+                        <option value="3">Neutral</option>
+                        <option value="4">Agree</option>
+                        <option value="5">Strongly Agree</option>
+                    </select>
+                </div>
+                <!-- Add more questions here -->
+                <input type="submit" value="Submit">
+            </form>
+            <div id="result" class="result">
+                <h3>Compatibility Summary</h3>
+                <div id="questionSummary"></div>
+                <div id="overallSummary"></div>
+                <div id="closingRemark"></div>
             </div>
-            <!-- Add more questions here -->
-            <h2>Friend 2</h2>
-            <div class="question">
-                <label for="q2">Question 1: Broccoli is delicious.</label>
-                <select name="q2" class="questionSelect">
-                    <option value="">Select an option</option>
-                    <option value="1">Strongly Disagree</option>
-                    <option value="2">Disagree</option>
-                    <option value="3">Neutral</option>
-                    <option value="4">Agree</option>
-                    <option value="5">Strongly Agree</option>
-                </select>
-            </div>
-            <!-- Add more questions here -->
-            <input type="submit" value="Submit">
-        </form>
-        <div id="result">
-            <h3>Compatibility Summary</h3>
-            <div id="questionSummary"></div>
-            <div id="overallSummary"></div>
-            <div id="closingRemark"></div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
+
