@@ -1,55 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Friendship Compatibility Quiz</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friendship Compatibility Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, p {
+        text-align: center;
+    }
+
+    button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    input[type="number"] {
+        width: 50px;
+        padding: 5px;
+        margin-right: 5px;
+        text-align: center;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+    }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Friendship Compatibility Quiz</h1>
-        </div>
-        <div class="quiz">
-            <p>Answer the following questions to see how compatible you are with your friend!</p>
-            <form id="quizForm">
-                <h2>Friend 1</h2>
-                <div class="question">
-                    <label for="q1">Question 1: Broccoli is delicious.</label>
-                    <select name="q1" class="questionSelect">
-                        <option value="">Select an option</option>
-                        <option value="1">Strongly Disagree</option>
-                        <option value="2">Disagree</option>
-                        <option value="3">Neutral</option>
-                        <option value="4">Agree</option>
-                        <option value="5">Strongly Agree</option>
-                    </select>
-                </div>
-                <!-- Add more questions here -->
-                <h2>Friend 2</h2>
-                <div class="question">
-                    <label for="q2">Question 1: Broccoli is delicious.</label>
-                    <select name="q2" class="questionSelect">
-                        <option value="">Select an option</option>
-                        <option value="1">Strongly Disagree</option>
-                        <option value="2">Disagree</option>
-                        <option value="3">Neutral</option>
-                        <option value="4">Agree</option>
-                        <option value="5">Strongly Agree</option>
-                    </select>
-                </div>
-                <!-- Add more questions here -->
-                <input type="submit" value="Submit">
-            </form>
-            <div id="result" class="result">
-                <h3>Compatibility Summary</h3>
-                <div id="questionSummary"></div>
-                <div id="overallSummary"></div>
-                <div id="closingRemark"></div>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+<div class="container">
+    <h1>Friendship Compatibility Quiz</h1>
+    <div id="questions"></div>
+    <button onclick="calculateCompatibility()">Calculate Compatibility</button>
+    <div id="results"></div>
+    <div class="error" id="error"></div>
+</div>
+<script>
+    const questions = [
+        "I enjoy spending time with this person.",
+        "I trust this person.",
+        "I feel comfortable sharing personal information with this person.",
+        "I feel understood by this person.",
+        "I feel supported by this person."
+    ];
+
+    let answers = [];
+    let totalCompatibility = 0;
+
+    function renderQuestions() {
+        const questionsDiv = document.getElementById('questions');
+        questionsDiv.innerHTML = '';
+        questions.forEach((question, index) => {
+            questionsDiv.innerHTML += `
+                <p>${question}</p>
+                <input type="number" min="1" max="5" id="answer${index + 1}" required>
+            `;
+        });
+    }
+
+    function calculateCompatibility() {
+        answers = [];
+        totalCompatibility = 0;
+        const errorDiv = document.getElementById('error');
+        errorDiv.innerHTML = '';
+
+        for (let i = 0; i < questions.length; i++) {
+            const answer = document.getElementById(`answer${i + 1}`).value;
+            if (!answer) {
+                errorDiv.textContent = "Please answer all questions.";
+                return;
+            }
+            answers.push(parseInt(answer));
+            totalCompatibility += 5 - Math.abs(answers[i] - 3);
+        }
+
+        const averageCompatibility = (totalCompatibility / questions.length) * 20;
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h2>Results</h2>
+            <p>Overall Compatibility: ${averageCompatibility.toFixed(2)}%</p>
+            <p>Individual Question Scores:</p>
+            <ul>
+                ${answers.map((answer, index) => `<li>${questions[index]}: ${100 - Math.abs(answer - 3) * 20}%</li>`).join('')}
+            </ul>
+            <p>${getClosingRemark(averageCompatibility)}</p>
+        `;
+    }
+
+    function getClosingRemark(averageCompatibility) {
+        if (averageCompatibility >= 80) {
+            return "You are incredibly compatible!";
+        } else if (averageCompatibility >= 60) {
+            return "You are moderately compatible.";
+        } else {
+            return "You might not be the best match.";
+        }
+    }
+
+    renderQuestions();
+</script>
 </body>
 </html>
-
