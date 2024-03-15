@@ -112,16 +112,11 @@
     }
 
     function calculateCompatibilityScores() {
-        let totalFriend1 = 0;
-        let totalFriend2 = 0;
+        let totalFriend1 = answersFriend1.reduce((acc, val) => acc + val, 0);
+        let totalFriend2 = answersFriend2.reduce((acc, val) => acc + val, 0);
 
-        for (let i = 0; i < questions.length; i++) {
-            totalFriend1 += 5 - Math.abs(answersFriend1[i] - 3);
-            totalFriend2 += 5 - Math.abs(answersFriend2[i] - 3);
-        }
-
-        const averageFriend1 = (totalFriend1 / questions.length) * 20;
-        const averageFriend2 = (totalFriend2 / questions.length) * 20;
+        const averageFriend1 = (totalFriend1 / (questions.length * 5)) * 100;
+        const averageFriend2 = (totalFriend2 / (questions.length * 5)) * 100;
 
         return {
             friend1: averageFriend1,
