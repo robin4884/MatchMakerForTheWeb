@@ -73,16 +73,18 @@
     let answersFriend2 = [];
 
     function renderQuestions() {
-        const questionsDiv = document.getElementById('questions');
-        questionsDiv.innerHTML = '';
-        questions.forEach((question, index) => {
-            questionsDiv.innerHTML += `
-                <p>${question}</p>
-                <input type="number" min="1" max="5" id="friend1-answer${index + 1}" required>
-                <input type="number" min="1" max="5" id="friend2-answer${index + 1}" required>
-            `;
-        });
-    }
+    const questionsDiv = document.getElementById('questions');
+    questionsDiv.innerHTML = '';
+    questions.forEach((question, index) => {
+        answersFriend1.push(Number(document.getElementById('friend1-answer${index + 1}').value));
+        answersFriend2.push(Number(document.getElementById('friend2-answer${index + 1}').value));
+        questionsDiv.innerHTML += `
+            <p>${question}</p>
+            <input type="number" min="1" max="5" id="friend1-answer${index + 1}" required>
+            <input type="number" min="1" max="5" id="friend2-answer${index + 1}" required>
+        `;
+    });
+}
     function calculateCompatibilityScore() {
     let totalFriend1 = answersFriend1.reduce((acc, val) => acc + val, 0);
     let totalFriend2 = answersFriend2.reduce((acc, val) => acc + val, 0);
@@ -102,7 +104,7 @@
 function getClosingRemark(compatibilityScore) {
     if (compatibilityScore >= 80) {
         return "You are incredibly compatible!";
-    } else if (compatibilityScore >= 60) {
+    } else if (compatibilityScore >= 50) {
         return "You are moderately compatible.";
     } else {
         return "You might not be the best match.";
