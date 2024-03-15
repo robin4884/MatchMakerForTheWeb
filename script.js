@@ -1,38 +1,54 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const quizForm = document.getElementById("quizForm");
-    const questionSummary = document.getElementById("questionSummary");
-    const overallSummary = document.getElementById("overallSummary");
-    const closingRemark = document.getElementById("closingRemark");
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('quizForm');
+    const questionSummary = document.getElementById('questionSummary');
+    const overallSummary = document.getElementById('overallSummary');
+    const closingRemark = document.getElementById('closingRemark');
 
-    quizForm.addEventListener("submit", function(event) {
+    form.addEventListener('submit', function(event) {
         event.preventDefault();
-        displayCompatibilitySummary();
-    });
 
-    function displayCompatibilitySummary() {
-        const questionSelects = Array.from(document.querySelectorAll(".questionSelect"));
-        const totalQuestions = questionSelects.length / 2; // Assuming both friends have answered the same number of questions
+        // Reset summaries
+        questionSummary.innerHTML = '';
+        overallSummary.innerHTML = '';
+        closingRemark.innerHTML = '';
 
-        const scores1 = questionSelects.slice(0, totalQuestions).map(select => parseInt(select.value));
-        const scores2 = questionSelects.slice(totalQuestions).map(select => parseInt(select.value));
+        let totalScore = 0;
+        let maxScore = 0;
+        let errorMessage = '';
 
-        const correctAnswers = scores1.reduce((acc, score, index) => (score === scores2[index] ? acc + 1 : acc), 0);
-        const compatibilityScore = (correctAnswers / totalQuestions) * 100;
+        // Loop through each question
+        for (let i = 1; i <= 2; i++) {
+            const q = document.getElementById('q' + i);
+            const selectedValue = parseInt(q.value);
+            const questionText = q.previousElementSibling.innerText;
 
-        overallSummary.textContent = `Overall Compatibility Score: ${compatibilityScore.toFixed(2)}%`;
+            if (isNaN(selectedValue) || selectedValue < 1 || selectedValue > 5) {
+                errorMessage += `Please answer question ${i}: "${questionText}"\n`;
+                continue;
+            }
 
-        let message = "";
-        if (compatibilityScore >= 80) {
-            message = "You are super compatible!";
-        } else if (compatibilityScore >= 60) {
-            message = "You are quite compatible!";
-        } else if (compatibilityScore >= 40) {
-            message = "You are moderately compatible.";
-        } else {
-            message = "You might not be very compatible.";
+            totalScore += selectedValue;
+            maxScore += 5;
+            questionSummary.innerHTML += `<p>Question ${i}: "${questionText}" - Compatibility Score: ${selectedValue}/5</p>`;
         }
 
-        closingRemark.textContent = message;
-        alert(message + " Congratulations, this is your compatibility!");
-    }
+        if (errorMessage) {
+            alert(errorMessage);
+            return;
+        }
+
+        const overallScore = Math.round((totalScore / maxScore) * 100);
+
+        overallSummary.innerHTML = `<p>Overall Compatibility Score: ${overallScore}%</p>`;
+
+        if (overallScore >= 80) {
+            closingRemark.innerHTML = `<p>Wow, you're incredibly compatible! You must be great friends!</p>`;
+        } else if (overallScore >= 60) {
+            closingRemark.innerHTML = `<p>You're quite compatible! Your friendship is off to a good start!</p>`;
+        } else if (overallScore >= 40) {
+            closingRemark.innerHTML = `<p>There's some compatibility, but there's room for improvement!</p>`;
+        } else {
+            closingRemark.innerHTML = `<p>There's not much compatibility. Maybe you need to get to know each other better!</p>`;
+        }
+    });
 });
