@@ -12,13 +12,28 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayCompatibilitySummary() {
         const compatibilityScores = [];
         const questionSelects = document.querySelectorAll(".questionSelect");
+        let hasError = false;
+
         questionSummary.innerHTML = ""; // Clear previous summary
+
         questionSelects.forEach((select, index) => {
             const score = parseInt(select.value);
-            compatibilityScores.push(score);
-            const questionNumber = index + 1;
-            questionSummary.innerHTML += `<p>Question ${questionNumber}: ${score}</p>`;
+            if (isNaN(score)) {
+                hasError = true;
+                select.classList.add("error");
+            } else {
+                select.classList.remove("error");
+                compatibilityScores.push(score);
+                const questionNumber = index + 1;
+                questionSummary.innerHTML += `<p>Question ${questionNumber}: ${score}</p>`;
+            }
         });
+
+        if (hasError) {
+            overallSummary.textContent = "";
+            closingRemark.textContent = "";
+            return;
+        }
 
         const overallScore = compatibilityScores.reduce((acc, val) => acc + val, 0) / (compatibilityScores.length * 5) * 100;
         overallSummary.textContent = `Overall Compatibility Score: ${overallScore.toFixed(2)}%`;

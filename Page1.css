@@ -65,3 +65,6 @@ body {
     padding: 20px 0;
     font-size: 15px;
 }
+.error {
+    border: 1px solid red;
+}
