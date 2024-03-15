@@ -21,7 +21,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         const lowestScore = 1; // Lowest possible score
-        const overallScore = (compatibilityScores.reduce((acc, val) => acc + (val === lowestScore ? 0 : val), 0) / (compatibilityScores.length * 5)) * 100;
+        const highestScore = 5; // Highest possible score
+        const minMaxDiff = highestScore - lowestScore;
+        const overallScore = (1 - (compatibilityScores.reduce((acc, val) => acc + Math.abs(val - (highestScore + lowestScore) / 2), 0) / (compatibilityScores.length * minMaxDiff))) * 100;
         overallSummary.textContent = `Overall Compatibility Score: ${overallScore.toFixed(2)}%`;
 
         let message = "";
