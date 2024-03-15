@@ -83,6 +83,22 @@
             `;
         });
     }
+    function calculateCompatibilityScore() {
+    let totalFriend1 = answersFriend1.reduce((acc, val) => acc + val, 0);
+    let totalFriend2 = answersFriend2.reduce((acc, val) => acc + val, 0);
+
+    // If one person has a 5 for all questions and the other has a 1 for all questions, return 0%
+    if (totalFriend1 === questions.length * 5 && totalFriend2 === questions.length) {
+        return 0;
+    } else if (totalFriend1 === questions.length && totalFriend2 === questions.length * 5) {
+        return 0;
+    }
+
+    const average = ((totalFriend1 + totalFriend2) / (questions.length * 5 * 2)) * 100;
+
+    return average;
+}
+
 
     function calculateCompatibility() {
         answersFriend1 = [];
