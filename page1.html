@@ -75,6 +75,11 @@
         "Q5. Good Grades are important to a thriving future"
     ];
 
+    const compatibilityThresholds = {
+        high: 80,
+        moderate: 60
+    };
+
     let answersPerson1 = [];
     let answersPerson2 = [];
 
@@ -87,20 +92,20 @@
                 <label for="person1-answer${index + 1}">Person 1:</label>
                 <select id="person1-answer${index + 1}">
                     <option value="">Select</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="1">Strongly Disagree</option>
+                    <option value="2">Disagree</option>
+                    <option value="3">Neutral</option>
+                    <option value="4">Agree</option>
+                    <option value="5">Strongly Agree</option>
                 </select>
                 <label for="person2-answer${index + 1}">Person 2:</label>
                 <select id="person2-answer${index + 1}">
                     <option value="">Select</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="1">Strongly Disagree</option>
+                    <option value="2">Disagree</option>
+                    <option value="3">Neutral</option>
+                    <option value="4">Agree</option>
+                    <option value="5">Strongly Agree</option>
                 </select>
             `;
         });
@@ -111,15 +116,14 @@
         errorDiv.innerHTML = '';
 
         let isValid = true;
-        for (let i = 0; i < questions.length; i++) {
-            const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
-            const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
+        questions.forEach((question, index) => {
+            const answerPerson1 = document.getElementById(`person1-answer${index + 1}`).value;
+            const answerPerson2 = document.getElementById(`person2-answer${index + 1}`).value;
             if (answerPerson1 === "" || answerPerson2 === "") {
-                errorDiv.textContent = "Please answer all questions for both persons.";
+                errorDiv.textContent = `Please answer question ${index + 1} for both persons.`;
                 isValid = false;
-                break;
             }
-        }
+        });
 
         if (isValid) {
             calculateCompatibility();
@@ -158,9 +162,9 @@
     }
 
     function getClosingRemark(compatibilityScore) {
-        if (compatibilityScore >= 80) {
+        if (compatibilityScore >= compatibilityThresholds.high) {
             return "You are incredibly compatible!";
-        } else if (compatibilityScore >= 60) {
+        } else if (compatibilityScore >= compatibilityThresholds.moderate) {
             return "You are moderately compatible.";
         } else {
             return "You might not be the best match.";
