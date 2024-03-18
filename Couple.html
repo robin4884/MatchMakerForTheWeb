@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Couple Compatibility Quiz</title>
+<title>Bestie Compatibility Quiz</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Couple Compatibility Quiz</h1>
+    <h1>Bestie Compatibility Quiz</h1>
     <p>Person 1 and 2, select your answer for each question from the dropdown:</p>
     <div id="questions"></div>
     <button onclick="validate()">Calculate Compatibility</button>
@@ -73,6 +73,7 @@
         "Q3. Focusing on the future in a relationship is necessary.",
         "Q4. Space is necessary in a relationship.",
         "Q5. My friends and family's opinion of you is important to me."
+
 
     ];
 
@@ -170,6 +171,7 @@
         } else {
             return "EEEKKK not looking good....";
         }
+
     }
 
     renderQuestions();
