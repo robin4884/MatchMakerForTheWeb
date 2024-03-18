@@ -54,15 +54,6 @@
     #questions p {
         text-align: left;
     }
-    #results {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    }
     
 </style>
 </head>
@@ -82,6 +73,7 @@
         "Q3. Focusing on the future in a relationship is necessary.",
         "Q4. Space is necessary in a relationship.",
         "Q5. My friends and family's opinion of you is important to me."
+
     ];
 
     const compatibilityThresholds = {
@@ -140,45 +132,26 @@
     }
 
     function calculateCompatibility() {
-    answersPerson1 = [];
-    answersPerson2 = [];
+        answersPerson1 = [];
+        answersPerson2 = [];
 
-    for (let i = 0; i < questions.length; i++) {
-        const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
-        const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
-        answersPerson1.push(parseInt(answerPerson1));
-        answersPerson2.push(parseInt(answerPerson2));
+        for (let i = 0; i < questions.length; i++) {
+            const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
+            const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
+            answersPerson1.push(parseInt(answerPerson1));
+            answersPerson2.push(parseInt(answerPerson2));
+        }
+
+        const compatibilityScore = calculateCompatibilityScore();
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h2>Results</h2>
+            <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
+            <p>${getClosingRemark(compatibilityScore)}</p>
+        `;
     }
 
-    const compatibilityScore = calculateCompatibilityScore();
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `
-        <h2>Results</h2>
-        <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
-        <p>${getClosingRemark(compatibilityScore)}</p>
-        <img src="${getImage(compatibilityScore)}" alt="Compatibility Image">
-    `;
-}
-
-function getImage(compatibilityScore) {
-    if (compatibilityScore >= compatibilityThresholds.high) {
-        return "high.jpg"; url('VGoodNews.PNG')
-    } else if (compatibilityScore >= compatibilityThresholds.moderate) {
-        return "moderate.jpg"; url('HoldHands.PNG')
-    } else {
-        return "low.jpg"; url('EEEKKK.PNG')
-    }
-}
-
-
-    resultsDiv.innerHTML = `
-        <h2>Results</h2>
-        <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
-        <img src="${imageSrc}" alt="Compatibility Image" style="max-width: 100%;">
-        <p>${getClosingRemark(compatibilityScore)}</p>
-    `;
-
-function calculateCompatibilityScore() {
+    function calculateCompatibilityScore() {
         let total = 0;
 
         for (let i = 0; i < questions.length; i++) {
@@ -191,7 +164,7 @@ function calculateCompatibilityScore() {
 
     function getClosingRemark(compatibilityScore) {
         if (compatibilityScore >= compatibilityThresholds.high) {
-            return "Love is in the are!";
+            return "Love is in the air!";
         } else if (compatibilityScore >= compatibilityThresholds.moderate) {
             return "Maybe take our friendship quiz insead? Might be better friends right now.";
         } else {
