@@ -62,7 +62,7 @@
 <body>
 <div class="container">
     <h1>Friendship Compatibility Quiz</h1>
-    <p>Person 1 and 2 put your answear in the box form 1 - 5. 1 will be strongly disagree with the statement and 5 being strongly agree with the statement.</p>
+    <p>Person 1 and 2 put your answer in the box form 1 - 5. 1 will be strongly disagree with the statement and 5 being strongly agree with the statement.</p>
     <div id="questions"></div>
     <button onclick="calculateCompatibility()">Calculate Compatibility</button>
     <div id="results"></div>
@@ -74,8 +74,10 @@
         "Q2. The best video game series is Assasins Creed",
         "Q3. Sweets are the best foods",
         "Q4. Arts and Crafts are fun",
-        "Q5. Good Grades are impartant to a thryving feuter"
+        "Q5. Good Grades are important to a thriving future"
     ];
+
+    const ERROR_MESSAGE = "Please answer all questions for both persons.";
 
     let answersPerson1 = [];
     let answersPerson2 = [];
@@ -94,9 +96,7 @@
         });
     }
 
-    function calculateCompatibility() {
-        answersPerson1 = [];
-        answersPerson2 = [];
+    function validate() {
         const errorDiv = document.getElementById('error');
         errorDiv.innerHTML = '';
 
@@ -104,9 +104,25 @@
             const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
             const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
             if (!answerPerson1 || !answerPerson2) {
-                errorDiv.textContent = "Please answer all questions for both persons.";
-                return;
+                errorDiv.textContent = ERROR_MESSAGE;
+                return false;
             }
+        }
+
+        return true;
+    }
+
+    function calculateCompatibility() {
+        if (!validate()) {
+            return;
+        }
+
+        answersPerson1 = [];
+        answersPerson2 = [];
+
+        for (let i = 0; i < questions.length; i++) {
+            const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
+            const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
             answersPerson1.push(parseInt(answerPerson1));
             answersPerson2.push(parseInt(answerPerson2));
         }
