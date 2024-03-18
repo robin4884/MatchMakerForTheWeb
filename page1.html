@@ -54,6 +54,15 @@
     #questions p {
         text-align: left;
     }
+    #results {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    }
     
 </style>
 </head>
@@ -69,7 +78,7 @@
 <script>
     const questions = [
         "Q1. Working out is fun",
-        "Q2. The best video game series is Assasins Creed",
+        "Q2. The best video game series is Assassin's Creed",
         "Q3. Sweets are the best foods",
         "Q4. Arts and Crafts are fun",
         "Q5. Good Grades are important to a thriving future"
@@ -148,9 +157,27 @@
             <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
             <p>${getClosingRemark(compatibilityScore)}</p>
         `;
+
+        const compatibilityScore = calculateCompatibilityScore();
+        const resultsDiv = document.getElementById('results');
+        let imageSrc = '';
+
+         if (compatibilityScore >= compatibilityThresholds.high) {
+         imageSrc = 'high-compatibility-image.jpg';
+        } else if (compatibilityScore >= compatibilityThresholds.moderate) {
+        imageSrc = 'moderate-compatibility-image.jpg';
+         } else {
+        imageSrc = 'low-compatibility-image.jpg';
     }
 
-    function calculateCompatibilityScore() {
+    resultsDiv.innerHTML = `
+        <h2>Results</h2>
+        <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
+        <img src="${imageSrc}" alt="Compatibility Image" style="max-width: 100%;">
+        <p>${getClosingRemark(compatibilityScore)}</p>
+    `;
+}
+function calculateCompatibilityScore() {
         let total = 0;
 
         for (let i = 0; i < questions.length; i++) {
