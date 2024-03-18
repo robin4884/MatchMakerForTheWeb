@@ -41,13 +41,6 @@
         background-color: #0056b3;
     }
 
-    input[type="number"] {
-        width: 50px;
-        padding: 5px;
-        margin-right: 5px;
-        text-align: center;
-    }
-
     .error {
         color: red;
         text-align: center;
@@ -77,8 +70,6 @@
         "Q5. Good Grades are important to a thriving future"
     ];
 
-    const ERROR_MESSAGE = "Please answer all questions for both persons.";
-
     let answersPerson1 = [];
     let answersPerson2 = [];
 
@@ -89,14 +80,28 @@
             questionsDiv.innerHTML += `
                 <p>${question}</p>
                 <label for="person1-answer${index + 1}">Person 1:</label>
-                <input type="number" min="1" max="5" id="person1-answer${index + 1}" required>
+                <select id="person1-answer${index + 1}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
                 <label for="person2-answer${index + 1}">Person 2:</label>
-                <input type="number" min="1" max="5" id="person2-answer${index + 1}" required>
+                <select id="person2-answer${index + 1}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             `;
         });
     }
 
-    function validate() {
+    function calculateCompatibility() {
+        answersPerson1 = [];
+        answersPerson2 = [];
         const errorDiv = document.getElementById('error');
         errorDiv.innerHTML = '';
 
@@ -104,25 +109,9 @@
             const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
             const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
             if (!answerPerson1 || !answerPerson2) {
-                errorDiv.textContent = ERROR_MESSAGE;
-                return false;
+                errorDiv.textContent = "Please answer all questions for both persons.";
+                return;
             }
-        }
-
-        return true;
-    }
-
-    function calculateCompatibility() {
-        if (!validate()) {
-            return;
-        }
-
-        answersPerson1 = [];
-        answersPerson2 = [];
-
-        for (let i = 0; i < questions.length; i++) {
-            const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
-            const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
             answersPerson1.push(parseInt(answerPerson1));
             answersPerson2.push(parseInt(answerPerson2));
         }
