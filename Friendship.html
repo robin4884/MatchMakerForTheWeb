@@ -140,35 +140,36 @@
     }
 
     function calculateCompatibility() {
-        answersPerson1 = [];
-        answersPerson2 = [];
+    answersPerson1 = [];
+    answersPerson2 = [];
 
-        for (let i = 0; i < questions.length; i++) {
-            const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
-            const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
-            answersPerson1.push(parseInt(answerPerson1));
-            answersPerson2.push(parseInt(answerPerson2));
-        }
-
-        const compatibilityScore = calculateCompatibilityScore();
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = `
-            <h2>Results</h2>
-            <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
-            <p>${getClosingRemark(compatibilityScore)}</p>
-        `;
-
-        const compatibilityScore = calculateCompatibilityScore();
-        const resultsDiv = document.getElementById('results');
-        let imageSrc = '';
-
-         if (compatibilityScore >= compatibilityThresholds.high) {
-         imageSrc = 'high-compatibility-image.jpg';
-        } else if (compatibilityScore >= compatibilityThresholds.moderate) {
-        imageSrc = 'moderate-compatibility-image.jpg';
-         } else {
-        imageSrc = 'low-compatibility-image.jpg';
+    for (let i = 0; i < questions.length; i++) {
+        const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
+        const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
+        answersPerson1.push(parseInt(answerPerson1));
+        answersPerson2.push(parseInt(answerPerson2));
     }
+
+    const compatibilityScore = calculateCompatibilityScore();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `
+        <h2>Results</h2>
+        <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
+        <p>${getClosingRemark(compatibilityScore)}</p>
+        <img src="${getImage(compatibilityScore)}" alt="Compatibility Image">
+    `;
+}
+
+function getImage(compatibilityScore) {
+    if (compatibilityScore >= compatibilityThresholds.high) {
+        return "high.jpg"; url('HoldHands.PNG')
+    } else if (compatibilityScore >= compatibilityThresholds.moderate) {
+        return "moderate.jpg"; url('GoodNews.PNG')
+    } else {
+        return "low.jpg"; url('EEEKKK.PNG')
+    }
+}
+
 
     resultsDiv.innerHTML = `
         <h2>Results</h2>
@@ -176,7 +177,7 @@
         <img src="${imageSrc}" alt="Compatibility Image" style="max-width: 100%;">
         <p>${getClosingRemark(compatibilityScore)}</p>
     `;
-}
+
 function calculateCompatibilityScore() {
         let total = 0;
 
@@ -190,11 +191,11 @@ function calculateCompatibilityScore() {
 
     function getClosingRemark(compatibilityScore) {
         if (compatibilityScore >= compatibilityThresholds.high) {
-            return "You are incredibly compatible!";
+            return "Yay! Your friends!";
         } else if (compatibilityScore >= compatibilityThresholds.moderate) {
-            return "You are moderately compatible.";
+            return "Good news! Your on your way to being friends.";
         } else {
-            return "You might not be the best match.";
+            return "EEEKKK not looking good....";
         }
     }
 

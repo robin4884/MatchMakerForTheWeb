@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bestie Compatibility Quiz</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('HeartBackGroundPage1.jpg');
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color:#ffffff
+    }
+
+    h1, h2, p {
+        text-align: center;
+    }
+
+    button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    select {
+        padding: 5px;
+        margin-right: 5px;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+    }
+
+    #questions p {
+        text-align: left;
+    }
+    #results {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    }
+    
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Bestie Compatibility Quiz</h1>
+    <p>Person 1 and 2, select your answer for each question from the dropdown:</p>
+    <div id="questions"></div>
+    <button onclick="validate()">Calculate Compatibility</button>
+    <div id="results"></div>
+    <div class="error" id="error"></div>
+</div>
+<script>
+    const questions = [
+        "Q1. Our Friendship is very important",
+        "Q2. I know I count on you for a good time.",
+        "Q3. I know I can count on you to be there for me",
+        "Q4. I know I can trust you with all my secrets",
+        "Q5. It would be fun to move in together"
+    ];
+
+    const compatibilityThresholds = {
+        high: 80,
+        moderate: 60
+    };
+
+    let answersPerson1 = [];
+    let answersPerson2 = [];
+
+    function renderQuestions() {
+        const questionsDiv = document.getElementById('questions');
+        questionsDiv.innerHTML = '';
+        questions.forEach((question, index) => {
+            questionsDiv.innerHTML += `
+                <p>${question}</p>
+                <label for="person1-answer${index + 1}">Person 1:</label>
+                <select id="person1-answer${index + 1}">
+                    <option value="">Select</option>
+                    <option value="1">Strongly Disagree</option>
+                    <option value="2">Disagree</option>
+                    <option value="3">Neutral</option>
+                    <option value="4">Agree</option>
+                    <option value="5">Strongly Agree</option>
+                </select>
+                <label for="person2-answer${index + 1}">Person 2:</label>
+                <select id="person2-answer${index + 1}">
+                    <option value="">Select</option>
+                    <option value="1">Strongly Disagree</option>
+                    <option value="2">Disagree</option>
+                    <option value="3">Neutral</option>
+                    <option value="4">Agree</option>
+                    <option value="5">Strongly Agree</option>
+                </select>
+            `;
+        });
+    }
+
+    function validate() {
+        const errorDiv = document.getElementById('error');
+        errorDiv.innerHTML = '';
+
+        let isValid = true;
+        questions.forEach((question, index) => {
+            const answerPerson1 = document.getElementById(`person1-answer${index + 1}`).value;
+            const answerPerson2 = document.getElementById(`person2-answer${index + 1}`).value;
+            if (answerPerson1 === "" || answerPerson2 === "") {
+                errorDiv.textContent = `Please answer question ${index + 1} for both persons.`;
+                isValid = false;
+            }
+        });
+
+        if (isValid) {
+            calculateCompatibility();
+        }
+    }
+
+    function calculateCompatibility() {
+    answersPerson1 = [];
+    answersPerson2 = [];
+
+    for (let i = 0; i < questions.length; i++) {
+        const answerPerson1 = document.getElementById(`person1-answer${i + 1}`).value;
+        const answerPerson2 = document.getElementById(`person2-answer${i + 1}`).value;
+        answersPerson1.push(parseInt(answerPerson1));
+        answersPerson2.push(parseInt(answerPerson2));
+    }
+
+    const compatibilityScore = calculateCompatibilityScore();
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `
+        <h2>Results</h2>
+        <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
+        <p>${getClosingRemark(compatibilityScore)}</p>
+        <img src="${getImage(compatibilityScore)}" alt="Compatibility Image">
+    `;
+}
+
+function getImage(compatibilityScore) {
+    if (compatibilityScore >= compatibilityThresholds.high) {
+        return "high.jpg"; url('PigBack.PNG')
+    } else if (compatibilityScore >= compatibilityThresholds.moderate) {
+        return "moderate.jpg"; url('HoldHands.PNG')
+    } else {
+        return "low.jpg"; url('EEEKKK.PNG')
+    }
+}
+
+
+    resultsDiv.innerHTML = `
+        <h2>Results</h2>
+        <p>Compatibility Score: ${compatibilityScore.toFixed(2)}%</p>
+        <img src="${imageSrc}" alt="Compatibility Image" style="max-width: 100%;">
+        <p>${getClosingRemark(compatibilityScore)}</p>
+    `;
+
+function calculateCompatibilityScore() {
+        let total = 0;
+
+        for (let i = 0; i < questions.length; i++) {
+            total += Math.abs(answersPerson1[i] - answersPerson2[i]);
+        }
+
+        const average = (1 - total / (questions.length * 4)) * 100;
+        return average;
+    }
+
+    function getClosingRemark(compatibilityScore) {
+        if (compatibilityScore >= compatibilityThresholds.high) {
+            return "Def besties!";
+        } else if (compatibilityScore >= compatibilityThresholds.moderate) {
+            return "Def friends! Maybe take our friendship quiz insead?";
+        } else {
+            return "EEEKKK not looking good....";
+        }
+    }
+
+    renderQuestions();
+</script>
+</body>
+</html>
